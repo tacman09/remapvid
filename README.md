@@ -98,6 +98,8 @@ cd remapvid
 ./build/remapvid --map examples/crystal-ball_1920x1080.map --output remapped.h264
 ```
 
+Press <kbd>Ctrl</kbd>+<kbd>C</kbd> to stop.
+
 ## Performance
 
 The maximum framerate depends on the map to use. The larger the size of the map is, the lower the framerate will be.  
