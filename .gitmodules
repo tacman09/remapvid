@@ -1,0 +1,6 @@
+[submodule "py-videocore"]
+	path = py-videocore
+	url = https://github.com/nineties/py-videocore.git
+[submodule "rpi-vcsm"]
+	path = rpi-vcsm
+	url = https://github.com/Idein/rpi-vcsm.git
