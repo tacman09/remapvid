@@ -93,12 +93,43 @@ sdram_freq=600
 
 ## Running example
 
+### Recording remapped video to file
+
 ```bash
 cd remapvid
 ./build/remapvid --map examples/crystal-ball_1920x1080.map --output remapped.h264
 ```
 
 Press <kbd>Ctrl</kbd>+<kbd>C</kbd> to stop.
+
+### Streaming remapped video to remote machine
+
+Install GStreamer on Raspberry Pi.
+
+```bash
+sudo apt install gstreamer1.0-tools gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-libav
+```
+
+Install GStreamer on remote machine (in case of macOS).
+
+```bash
+brew install gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad gst-libav
+```
+
+Run GStreamer on remote machine.
+
+```bash
+video_stream_port=[port number of your remote machine (e.g. 9000)]
+gst-launch-1.0 -v udpsrc port=$video_stream_port caps='application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264' ! rtph264depay ! avdec_h264 ! videoconvert ! autovideosink sync=false
+```
+
+Run GStreamer on Raspberry Pi.
+
+```bash
+remote_addr=[ip address of your remote machine (e.g. 192.168.1.10)]
+video_stream_port=[port number of your remote machine (e.g. 9000)]
+./build/remapvid --map examples/crystal-ball_1920x1080.map --bitrate 5000000 | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=10 pt=96 ! udpsink host=$remote_addr port=$video_stream_port
+```
 
 ## Performance
 
