@@ -60,7 +60,7 @@ cd userland
 ### Remapvid
 
 ```bash
-git clone --recursive https://github.com/tkman33/remapvid.git
+git clone --recursive https://github.com/tacman09/remapvid.git
 cd remapvid
 meson build
 ninja -C build
